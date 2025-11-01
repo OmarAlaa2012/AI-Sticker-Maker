@@ -6,3 +6,5 @@ export interface ImageFile {
   url: string;
   base64: string;
 }
+
+export type StickerStyle = 'stickerify' | 'redraw';

@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface StickerPreviewProps {
@@ -10,12 +9,13 @@ interface StickerPreviewProps {
 }
 
 const LoadingSkeleton: React.FC = () => (
-    <div className="w-full h-full bg-slate-800 rounded-2xl animate-pulse flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-            <svg className="w-12 h-12 text-slate-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z" />
+    <div className="w-full h-full glass-card rounded-2xl flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4 text-center">
+            <svg className="w-16 h-16 text-brand-secondary animate-pulse-slow drop-shadow-[0_0_10px_rgba(167,139,250,0.7)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z" />
             </svg>
-            <span className="text-slate-400 font-medium">Generating Sticker...</span>
+            <span className="text-slate-300 text-xl font-medium">Adding AI Magic...</span>
+            <span className="text-slate-400 text-sm">Cartoonizing your pixels.</span>
         </div>
     </div>
 );
@@ -34,23 +34,25 @@ const ResetIcon = () => (
 
 export const StickerPreview: React.FC<StickerPreviewProps> = ({ originalImage, generatedImage, isLoading, error, onReset }) => {
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center pt-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
             <div className="flex flex-col items-center">
-                <h3 className="text-xl font-bold text-slate-300 mb-4">Original</h3>
-                <div className="aspect-square w-full max-w-md bg-brand-dark p-4 rounded-2xl shadow-lg">
+                <h3 className="text-xl font-bold text-slate-300 mb-4 tracking-wider">Original</h3>
+                <div className="aspect-square w-full max-w-md glass-card p-4 rounded-2xl shadow-lg">
                     <img src={originalImage} alt="Original upload" className="w-full h-full object-contain rounded-lg" />
                 </div>
             </div>
             <div className="flex flex-col items-center">
-                <h3 className="text-xl font-bold text-slate-300 mb-4">AI Sticker</h3>
-                <div className="aspect-square w-full max-w-md bg-brand-dark p-4 rounded-2xl shadow-lg">
+                <h3 className="text-xl font-bold text-slate-300 mb-4 tracking-wider">AI Sticker</h3>
+                <div className="aspect-square w-full max-w-md">
                     {isLoading && <LoadingSkeleton />}
                     {!isLoading && generatedImage && (
-                        <img src={generatedImage} alt="Generated sticker" className="w-full h-full object-contain rounded-lg" />
+                         <div className="aspect-square w-full max-w-md glass-card p-4 rounded-2xl shadow-lg">
+                            <img src={generatedImage} alt="Generated sticker" className="w-full h-full object-contain rounded-lg" />
+                        </div>
                     )}
                     {error && !isLoading && (
-                        <div className="w-full h-full flex flex-col items-center justify-center text-center text-red-400 bg-red-900/20 rounded-lg p-4">
+                        <div className="w-full h-full aspect-square flex flex-col items-center justify-center text-center text-red-400 bg-red-900/30 rounded-2xl p-4 glass-card">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mb-2" viewBox="0 0 20 20" fill="currentColor">
                                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                             </svg>
@@ -67,7 +69,7 @@ export const StickerPreview: React.FC<StickerPreviewProps> = ({ originalImage, g
                 <a
                     href={generatedImage}
                     download="sticker.png"
-                    className="flex items-center justify-center px-6 py-3 bg-brand-primary text-white font-semibold rounded-lg shadow-md hover:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary focus:ring-offset-brand-background transition-all transform hover:scale-105"
+                    className="flex items-center justify-center px-6 py-3 gradient-button text-white font-semibold rounded-lg shadow-lg"
                 >
                     <DownloadIcon />
                     Download Sticker
@@ -75,10 +77,10 @@ export const StickerPreview: React.FC<StickerPreviewProps> = ({ originalImage, g
             )}
             <button
                 onClick={onReset}
-                className="flex items-center justify-center px-6 py-3 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 focus:ring-offset-brand-background transition-colors"
+                className="flex items-center justify-center px-6 py-3 bg-slate-700/80 text-white font-semibold rounded-lg shadow-md hover:bg-slate-600/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 focus:ring-offset-brand-background transition-colors"
             >
                 <ResetIcon />
-                Convert Another
+                Create Another
             </button>
         </div>
     </div>

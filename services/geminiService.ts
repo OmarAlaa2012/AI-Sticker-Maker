@@ -1,6 +1,6 @@
-
 import { GoogleGenAI, Modality } from "@google/genai";
 import type { GenerateContentResponse } from "@google/genai";
+import type { StickerStyle } from "../types";
 
 const API_KEY = process.env.API_KEY;
 
@@ -19,8 +19,29 @@ const fileToBase64 = (file: File): Promise<string> =>
   });
 
 
-export const generateStickerFromImage = async (base64ImageData: string, mimeType: string): Promise<string> => {
+export const generateStickerFromImage = async (base64ImageData: string, mimeType: string, style: StickerStyle): Promise<string> => {
     try {
+        const stickerifyPrompt = 'Convert this image into a vinyl sticker. It should have a thick, clean, solid white border around the subject. Keep the original image content as is, just add the sticker border. The background outside the white border should be transparent.';
+        
+        const redrawPrompt = `Task: Radically reimagine the user's image and create a vibrant, cartoon-style vinyl sticker. This is not just a filter; create a completely new, lively character.
+
+Instructions:
+
+1.  **Reimagine and Redraw:**
+    *   **Core Task:** Do not just trace or apply a simple style. Fundamentally redraw the main subject as an energetic, expressive cartoon character.
+    *   **Personality:** Give the character a distinct personality. If it's an animal, make it mischievous, heroic, or goofy. If it's a person, amplify their expression.
+    *   **Dynamics & Pose:** Create a sense of life and motion. Put the character in a dynamic pose, as if they were captured mid-action.
+    *   **Features:** Use classic animation principles. Exaggerate key features—big expressive eyes, dynamic lines of action, and simplified, powerful shapes.
+    *   **Color:** Use a palette of vibrant, saturated, and glowing colors that pop. Use bold shading to give the character depth and volume.
+
+2.  **Create Sticker Border:**
+    *   Once the new cartoon character is complete, add a thick, clean, and solid white die-cut border around its entire silhouette.
+
+3.  **Final Output:**
+    *   The final image must be the completely new cartoon character with its white border, rendered on a fully transparent background.`;
+
+        const prompt = style === 'stickerify' ? stickerifyPrompt : redrawPrompt;
+
         const response: GenerateContentResponse = await ai.models.generateContent({
             model: 'gemini-2.5-flash-image',
             contents: {
@@ -32,7 +53,7 @@ export const generateStickerFromImage = async (base64ImageData: string, mimeType
                   },
                 },
                 {
-                  text: 'Convert this image into a vinyl sticker. It should have a thick, clean, solid white border around the subject. Redraw it in a vibrant, clean, simplified cartoon or illustration style, enhancing the colors and details to look like a high-quality sticker. The background outside the white border should be transparent.',
+                  text: prompt,
                 },
               ],
             },

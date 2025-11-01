@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,6 +20,16 @@
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
             },
+            animation: {
+              'gradient-bg': 'gradient-bg 15s ease infinite',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              'gradient-bg': {
+                '0%, 100%': { 'background-position': '0% 50%' },
+                '50%': { 'background-position': '100% 50%' },
+              },
+            },
           },
         },
       }
@@ -38,8 +47,28 @@
   }
 }
 </script>
+<style>
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .gradient-button {
+    background-image: linear-gradient(to right, #8b5cf6, #6366f1);
+    transition: all 0.3s ease;
+  }
+  .gradient-button:hover {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+    transform: translateY(-2px);
+  }
+  .style-card-active {
+    border-color: #a78bfa;
+    box-shadow: 0 0 30px rgba(167, 139, 250, 0.4);
+  }
+</style>
 </head>
-  <body class="bg-brand-background">
+  <body class="bg-gradient-to-br from-[#020024] via-[#0F172A] to-[#0b0035] bg-[length:200%_200%] animate-gradient-bg">
     <div id="root"></div>
   </body>
 </html>
